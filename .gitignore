@@ -1,0 +1,10 @@
+__pycache__/
+venv/
+.venv/
+.env
+.DS_Store
+.ipynb_checkpoints/
+my_t5_model/
+*.pt
+*.safetensors
+*.bin
