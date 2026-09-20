@@ -1,91 +1,392 @@
-# AI_Text_Summarizer
+# AI Text Summarizer
 
-A web app that turns long text into a short, readable summary. Built with FastAPI and a T5 transformer model fine-tuned using Hugging Face Transformers and PyTorch, with a simple HTML/CSS/JavaScript frontend.
+A web application that converts long text into a short, readable summary using a **fine-tuned T5 Transformer model**.
 
-What it does
-Open the web page and paste the text you want to summarize.
-The backend preprocesses and tokenizes the text and runs it through the fine-tuned T5 model.
-The generated summary is returned and shown on the page.
+The application is built with **FastAPI** on the backend and a simple **HTML/CSS/JavaScript** frontend. The model is fine-tuned using **Hugging Face Transformers and PyTorch**.
 
-The project covers the full workflow: text preprocessing, tokenization, transformer fine-tuning, saving and loading the trained model, inference, and serving the model through a web interface.
+---
 
-Tech stack
-Frontend: HTML, CSS, JavaScript
-Backend: FastAPI, Uvicorn (Python)
+## 🚀 Features
 
-Project structure
+* Summarize long text using a fine-tuned **T5 Transformer**
+* Simple and easy-to-use web interface
+* FastAPI backend for model inference
+* Text preprocessing and tokenization
+* Loads a locally saved fine-tuned model
+* REST API endpoint for summarization
+* Interactive API documentation with FastAPI
+* Runs locally on CPU — no GPU required
+
+---
+
+## 🧠 How It Works
+
+The application follows this workflow:
+
+```text
+User enters text
+       ↓
+Frontend sends text to FastAPI
+       ↓
+Text preprocessing
+       ↓
+Tokenization using T5 tokenizer
+       ↓
+Fine-tuned T5 model
+       ↓
+Text generation
+       ↓
+Generated summary
+       ↓
+Summary displayed on the webpage
+```
+
+The project covers the complete NLP workflow:
+
+1. Text preprocessing
+2. Tokenization
+3. Transformer model fine-tuning
+4. Saving the trained model
+5. Loading the trained model
+6. Model inference
+7. Serving the model through a web application
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+* HTML
+* CSS
+* JavaScript
+
+### Backend
+
+* Python
+* FastAPI
+* Uvicorn
+
+### Machine Learning / NLP
+
+* PyTorch
+* Hugging Face Transformers
+* T5 Transformer
+
+### Development
+
+* Git
+* GitHub
+* Conda / Python Virtual Environment
+
+---
+
+## 📁 Project Structure
+
+```text
 AI_Text_Summarizer/
-├── app.py              FastAPI app: loads the model and serves the summarizer
-├── templates/          HTML frontend
-├── requirements.txt    Python dependencies
-└── .gitignore
+│
+├── app.py                  # FastAPI application
+│
+├── templates/
+│   └── index.html          # Frontend webpage
+│
+├── my_t5_model/            # Fine-tuned T5 model (not included in Git)
+│
+├── requirements.txt        # Python dependencies
+│
+├── .gitignore              # Ignored files and folders
+│
+└── README.md               # Project documentation
+```
 
-The fine-tuned model folder (my_t5_model/, ~233 MB) is not included in this repo because of GitHub's file size limits. See Get the model below for how to add it.
+> **Note:** The `my_t5_model/` folder is not included in this repository because the model files are approximately **233 MB**, which exceeds GitHub's recommended file-size limits.
 
-Setup (macOS)
-1. Prerequisites
-Python 3.10 or 3.11 recommended. Check your version with python3 --version. If your Mac's default python3 is a different version, use conda to get an isolated environment instead of changing your system Python.
+---
 
-If you don't have conda, install Miniconda first.
+# ⚙️ Setup
 
-2. Clone and create an environment
-bash
+## 1. Prerequisites
+
+Make sure you have:
+
+* Python **3.10 or 3.11**
+* Conda
+* Git
+
+Check your Python version:
+
+```bash
+python3 --version
+```
+
+### Recommended
+
+Python 3.10 or 3.11 is recommended for this project.
+
+If your Mac already has a different Python version, it is better to use **Conda** to create an isolated environment rather than changing your system Python installation.
+
+If you don't have Conda, install **Miniconda** first.
+
+---
+
+## 2. Clone the Repository
+
+```bash
 git clone https://github.com/GurbachanS/AI_Text_Summarizer.git
 cd AI_Text_Summarizer
+```
 
+---
+
+## 3. Create a Conda Environment
+
+Create a dedicated environment for the project:
+
+```bash
 conda create -n text_summarizer python=3.11 -y
+```
+
+Activate it:
+
+```bash
 conda activate text_summarizer
+```
 
-You'll need to run conda activate text_summarizer again every time you open a new terminal tab to work on this project.
+> You need to run `conda activate text_summarizer` again whenever you open a new terminal session.
 
-3. Install Python dependencies
-bash
+---
+
+## 4. Install Dependencies
+
+Upgrade pip:
+
+```bash
 pip install --upgrade pip
+```
+
+Install the required packages:
+
+```bash
 pip install -r requirements.txt
+```
 
-PyTorch is a large download, so the first install can take a few minutes.
+> **Note:** PyTorch is a relatively large package, so the installation may take a few minutes.
 
-4. Get the model
+---
 
-The app loads the fine-tuned model from a folder named my_t5_model/ in the project root.
+# 🤖 Get the Fine-Tuned Model
 
-Option A: Download it. Get the model from [Hugging Face Hub link / Google Drive link] and place the folder in the project root as my_t5_model/.
-Option B: Train it yourself. Fine-tune T5 on [dataset name], then save it into the project root:
-python
-  model.save_pretrained("my_t5_model")
-  tokenizer.save_pretrained("my_t5_model")
+The application expects the fine-tuned model to be located at:
 
-Check that the folder is in place:
+```text
+AI_Text_Summarizer/
+└── my_t5_model/
+```
 
-bash
+There are two ways to get the model.
+
+### Option 1 — Download the Trained Model
+
+Download the trained model from:
+
+**[Hugging Face Hub / Google Drive — Add your link here]**
+
+After downloading, place the model folder in the project root:
+
+```text
+AI_Text_Summarizer/
+├── app.py
+├── templates/
+├── my_t5_model/
+├── requirements.txt
+└── README.md
+```
+
+### Option 2 — Train the Model Yourself
+
+If you want to reproduce the training process, fine-tune T5 using the required dataset.
+
+After training, save the model and tokenizer:
+
+```python
+model.save_pretrained("my_t5_model")
+tokenizer.save_pretrained("my_t5_model")
+```
+
+The resulting folder should contain files similar to:
+
+```text
+my_t5_model/
+├── config.json
+├── tokenizer_config.json
+├── tokenizer.json
+├── special_tokens_map.json
+└── model.safetensors
+```
+
+You can verify that the model is in the correct location:
+
+```bash
 ls my_t5_model
+```
 
-You should see config.json, the tokenizer files, and a weights file (model.safetensors or pytorch_model.bin).
+---
 
-5. Run the app
-bash
+# ▶️ Run the Application
+
+Make sure the Conda environment is activated:
+
+```bash
 conda activate text_summarizer
+```
+
+Start the FastAPI server:
+
+```bash
 uvicorn app:app --reload --host 0.0.0.0 --port 8000
-The web interface is at http://localhost:8000.
-FastAPI's interactive API docs are at http://localhost:8000/docs.
+```
 
-The frontend is served by the same FastAPI app, so there is only one process to start.
+Once the server starts, open:
 
-6. Use it
-Open http://localhost:8000 in your browser.
-Paste the text you want to summarize into the input box.
-Click Summarize.
-The summary appears on the page.
+### 🌐 Web Application
 
-Notes
-The first request after starting the server can be slower because the model is being loaded into memory.
-If you see an error like OSError or FileNotFoundError mentioning my_t5_model, the model folder is missing or misplaced. It must be in the project root, and you must start uvicorn from that same folder.
-If port 8000 is already in use, start the app on another port, for example --port 8001, and open that port in your browser.
-Inference for a model this size runs on CPU, so a GPU is not required.
-my_t5_model/ is listed in .gitignore so the large weights are never committed by accident.
-Future improvements
-Deploy the app (for example on Hugging Face Spaces) with a public demo link
-Add adjustable summary length controls
-Add a ROUGE evaluation script and report the scores above
-Support PDF/TXT file upload as input
-Containerize the app with Docker
+```text
+http://localhost:8000
+```
+
+### 📚 FastAPI API Documentation
+
+```text
+http://localhost:8000/docs
+```
+
+The frontend and backend are served by the **same FastAPI application**, so only one server process is required.
+
+---
+
+# 🖥️ How to Use
+
+1. Open:
+
+   ```text
+   http://localhost:8000
+   ```
+
+2. Enter or paste the text you want to summarize.
+
+3. Click **Summarize**.
+
+4. The application sends the text to the FastAPI backend.
+
+5. The T5 model processes the input and generates a summary.
+
+6. The generated summary is displayed on the webpage.
+
+---
+
+# 🔌 API
+
+The FastAPI backend also provides an API endpoint for text summarization.
+
+You can explore and test the available endpoints through:
+
+```text
+http://localhost:8000/docs
+```
+
+FastAPI automatically generates interactive API documentation using Swagger UI.
+
+---
+
+# ⚡ Performance Notes
+
+### First Request
+
+The first request may take longer because the fine-tuned model needs to be loaded into memory.
+
+### CPU Inference
+
+The application can run on a CPU, so a GPU is **not required**.
+
+However, inference may be slower on CPU compared with a GPU.
+
+---
+
+# 🐛 Troubleshooting
+
+## `OSError` or `FileNotFoundError` for `my_t5_model`
+
+Make sure the model folder exists in the project root:
+
+```text
+AI_Text_Summarizer/
+└── my_t5_model/
+```
+
+Also make sure you start Uvicorn from the project root:
+
+```bash
+cd AI_Text_Summarizer
+uvicorn app:app --reload --host 0.0.0.0 --port 8000
+```
+
+---
+
+## Port 8000 Already in Use
+
+If port `8000` is already being used, run the application on another port:
+
+```bash
+uvicorn app:app --reload --host 0.0.0.0 --port 8001
+```
+
+Then open:
+
+```text
+http://localhost:8001
+```
+
+---
+
+# 📦 Model Information
+
+| Component     | Details                     |
+| ------------- | --------------------------- |
+| Model         | T5 Transformer              |
+| Training      | Fine-tuned                  |
+| Framework     | Hugging Face Transformers   |
+| Deep Learning | PyTorch                     |
+| Model Size    | ~233 MB                     |
+| Inference     | CPU supported               |
+| Storage       | Local `my_t5_model/` folder |
+
+---
+
+# 🔮 Future Improvements
+
+The following features can be added in future versions:
+
+* [ ] Deploy the application with **Hugging Face Spaces**
+* [ ] Add a public demo link
+* [ ] Add adjustable summary length controls
+* [ ] Add ROUGE evaluation and report model scores
+* [ ] Support PDF file uploads
+* [ ] Support TXT file uploads
+* [ ] Add Docker support
+* [ ] Improve frontend UI/UX
+* [ ] Add loading/progress indicators
+* [ ] Add support for larger input documents
+
+---
+
+# 📌 Important Notes
+
+* The trained model is **not included in this GitHub repository** because of its large file size.
+* The model must be placed inside `my_t5_model/` before running the application.
+* Make sure you are using the correct Python environment.
+* The application can run without a GPU.
+* Keep `my_t5_model/` in `.gitignore` to prevent accidentally committing large model files.
+
+---
+
